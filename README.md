@@ -94,6 +94,7 @@ These are improvements I thought of. I'm not necessarily planning on doing these
 - [ ] define word mapping for common words and phrases that aren't normally spoken (like "nix")
 - [x] debug reason nerd-dictation dictating silence to "the" for me on silent idle -- (used an improved model for VOSK)
 - [ ] better default hotkeys
+- [ ] package as a nix flake
 
 `nerd-dictation/`
 - [ ] define nix runCommand or wrap nerd-dictation defining `--vosk-model-dir=some/nix/path/model` appending args added by the user for use with nerd-dictation or patch it in a more hacky way?

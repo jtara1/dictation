@@ -1,5 +1,5 @@
 # nix module spec with custom arg, vars including vars.user
-{ pkgs, vars, ... }:
+{ pkgs, vars ? { user = "j"; }, ... }:
 let
   speechToTextBtnShell = import ./build-bundle.nix { inherit (pkgs) stdenv; };
 in
