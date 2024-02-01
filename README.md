@@ -14,16 +14,18 @@ chmod +x toggle-typing.sh
 
 I'm loading a bigger model in python.nix than the default which takes several GB's on disk and ~5 GB memory.
 
-
 ### Packages
 
 - bash
 - screen
 - nix-shell
 
+
 ## Usage
 
-### Direct usage
+Everything is layered so you can choose your entrypoint.
+
+### Direct usage with global hotkeys
 
 ```shell
 cd speech-to-text-button
@@ -32,7 +34,7 @@ cd speech-to-text-button
 
 requires: nix-shell and deps of toggle-typing.sh
 
-### toggle-typing.sh
+### Direct usage toggling dictation manually
 
 If you don't want the global hotkeys, you can
 
@@ -51,7 +53,10 @@ If you kill its screen session directly, it won't deallocate memory for the mode
 
 ### speech-to-text-button.desktop
 
-Is bugged and requires nix and home manager.
+Search for and open `Speech to Text Button` desktop application.
+This opens a terminal running hotkeys.py which can help you monitor the logs, stdout, stderr.
+
+requires: nix and home manager
 
 Most linux desktop environments should have support for this. I've created an entry for this executable as
 a desktop application.
@@ -95,13 +100,6 @@ These are improvements I thought of. I'm not necessarily planning on doing these
 - [ ] add home-manager as a dep in the build or add a systemd service to create ~/.config/nerd-dictation/model, download, unzip model before runtime for runtime?
 
 
-## Notes
-
-I've run this on my computer which is running NixOS x86 64 headful linux running the X11 display server.
-nerd-dictation should work easily on X11, Wayland, and headless linux (TTY) by building and including
-in nerd-dictation runtime, ydotool instead of xdotool. 
-
-
 ## Alternatives
 
 These options can only be used in certain contexts or applications.
@@ -111,7 +109,7 @@ These options can only be used in certain contexts or applications.
 This uses a remote relay server to process audio for speech to text. If you run chromium or chrome, you can use
 my prototype https://tarasoft.pro/speech-to-text.html
 
-It's about 100 lines of HTML and JS.
+It's about <100 lines of HTML and JS.
 
 You permit audio permission request via your browser for the web page/site, speak, copy and paste your text.
 
