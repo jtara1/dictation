@@ -1,0 +1,16 @@
+diff --git a/python/setup.py b/python/setup.py
+index f8c2d41..0360f5b 100644
+--- a/python/setup.py
++++ b/python/setup.py
+@@ -11,11 +11,6 @@ system = os.environ.get('VOSK_SYSTEM', platform.system())
+ architecture = os.environ.get('VOSK_ARCHITECTURE', platform.architecture()[0])
+ machine = os.environ.get('VOSK_MACHINE', platform.machine())
+
+-# Copy precompmilled libraries
+-for lib in glob.glob(os.path.join(vosk_source, "src/lib*.*")):
+-    print ("Adding library", lib)
+-    shutil.copy(lib, "vosk")
+-
+ # Create OS-dependent, but Python-independent wheels.
+ try:
+     from wheel.bdist_wheel import bdist_wheel
