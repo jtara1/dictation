@@ -2,10 +2,15 @@
 # Expects home-manager to be setup
 { pkgs, ... }:
 let
+  nerdDictationPkg = import ./nerd-dictation-pkg;
   speechToTextBtnShell = import ./build-bundle.nix { inherit (pkgs) stdenv; };
 in
 {
-  environment.systemPackages = [ pkgs.screen ];
+  environment.systemPackages = [ pkgs.screen nerdDictationPkg ];
+
+  home-manager.users.j = {
+    home.packages = [ nerdDictationPkg ];
+  };
 
   home-manager.sharedModules = [
     {

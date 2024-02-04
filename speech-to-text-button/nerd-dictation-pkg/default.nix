@@ -32,12 +32,12 @@ let
 
     src = fetchgit {
       url = "https://github.com/alphacep/vosk-api";
+      rev = "cf2560c9f8a49d3d366b433fdabd78c518231bec";
       sparseCheckout = [
-        # FIXME: why isn't this pulling src/ from the repo? I need to create and add to src/ manually during configurePhase
         "src"
         "python"
       ];
-      hash = "sha256-7TxyvfgGkFOrt/HnLWAILuRaVkTlWL+nP7+dRt++7OE=";
+      hash = "sha256-hVQJNZSNhpw+BdOkZDqDVlRg6feK5OjR0ks7DizrBeE=";
     };
 
     nativeBuildInputs = [ stdenv.cc ];
@@ -54,7 +54,6 @@ let
     ];
 
     configurePhase = ''
-      mkdir src/
       # hack: put things in places like their module expects - python setup is moving C header and C lib to unique places
       cp ${libvosk}/lib/vosk_api.h src/
       cp ${libvosk}/lib/libvosk.so python/vosk/
