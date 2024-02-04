@@ -8,7 +8,7 @@ let
   nerd-dictation = import ./nerd-dictation-pkg { inherit pkgs; };
   nerd-dictation-model = ./nerd-dictation-pkg/model.nix;
 
-  speechToTextButton = import ./build.nix { inherit (pkgs) stdenv nerd-dictation; };
+  speechToTextButton = import ./build.nix { inherit pkgs nerd-dictation; };
 in
 {
   home-manager.sharedModules = [
@@ -22,7 +22,7 @@ in
       config.xdg.desktopEntries = {
         speechToTextButton = {
           name = "Speech to Text Button";
-          exec = "${speechToTextBtnShell}/bin/hotkeys.py";
+          exec = "${speechToTextButton}/bin/hotkeys.py";
           terminal = true;
           comment = "Dictate your speech to text at the press of a button";
           categories = [ "Utility" ];
@@ -38,7 +38,7 @@ in
     {
       home.activation.nerd-dictation-model = entryAfter [ "writeBoundary" ] ''
         mkdir -p $HOME/.config/nerd-dictation 2> /dev/null
-        ln -sfn ${pkgs.callPackage nerdDictationModel { }}/model $HOME/.config/nerd-dictation/model
+        ln -sfn ${pkgs.callPackage nerd-dictation-model { }}/model $HOME/.config/nerd-dictation/model
       '';
     }
   ];

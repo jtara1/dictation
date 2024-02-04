@@ -1,10 +1,10 @@
 # build: $ nix-build -o result --verbose build.nix
 # run: $ ./result/bin/hotkeys.py
 {
-  stdenv
-  , pkgs
+  pkgs
   , nerd-dictation
 }:
+with (pkgs) stdenv;
 stdenv.mkDerivation rec {
   pname = "speech-to-text-button";
 
