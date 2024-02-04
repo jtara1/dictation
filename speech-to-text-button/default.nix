@@ -5,8 +5,8 @@
   , entryAfter # from home-manager flake.nix, lib.hm.dag.entryAfter
 }:
 let
-  nerd-dictation = import ./nerd-dictation-pkg { inherit pkgs; };
-  nerd-dictation-model = ./nerd-dictation-pkg/model.nix;
+  nerd-dictation = import ./nerd-dictation { inherit pkgs; };
+  nerd-dictation-model = ./nerd-dictation/model.nix;
 
   speechToTextButton = import ./build.nix { inherit pkgs nerd-dictation; };
 in

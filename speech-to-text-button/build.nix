@@ -4,8 +4,8 @@
   pkgs
   , nerd-dictation
 }:
-with (pkgs) stdenv;
-stdenv.mkDerivation rec {
+with pkgs;
+stdenv.mkDerivation {
   pname = "speech-to-text-button";
 
   version = "1.0";
