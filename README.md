@@ -1,4 +1,4 @@
-# Speech to Text Button
+# Dictation
 
 This enables you to the do speech to text typing and toggle to pause or resume it with the press of a hotkey.
 Everything runs locally. This code helps build, bundle, download and load model, add hotkeys, and run nerd-dictation.
@@ -28,7 +28,7 @@ Everything is layered so you can choose your entrypoint.
 ### Direct usage with global hotkeys
 
 ```shell
-cd speech-to-text-button
+cd dictation
 ./hotkeys.py
 ```
 
@@ -39,7 +39,7 @@ requires: nix-shell and deps of toggle-typing.sh
 If you don't want the global hotkeys, you can
 
 ```shell
-cd speech-to-text-button
+cd dictation
 ./toggle-typing.sh # start
 ./toggle-typing.sh # pause
 ./toggle-typing.sh # resume

@@ -6,7 +6,7 @@
 }:
 with pkgs;
 stdenv.mkDerivation {
-  pname = "speech-to-text-button";
+  pname = "dictation";
 
   version = "1.0";
 

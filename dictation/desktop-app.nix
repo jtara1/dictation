@@ -8,21 +8,21 @@ let
   nerd-dictation = import ./nerd-dictation { inherit pkgs; };
   nerd-dictation-model = ./nerd-dictation/model.nix;
 
-  speechToTextButton = import ./build.nix { inherit pkgs nerd-dictation; };
+  dictation = import ./build.nix { inherit pkgs nerd-dictation; };
 in
 {
   home-manager.sharedModules = [
     # libvosk, vosk, nerd-dictation, and my executables in src/
     {
-      home.packages = [ speechToTextButton ];
+      home.packages = [ dictation ];
     }
 
     # desktop app to run hotkeys.py
     {
       config.xdg.desktopEntries = {
-        speechToTextButton = {
-          name = "Speech to Text Button";
-          exec = "${speechToTextButton}/bin/hotkeys.py";
+        dictation = {
+          name = "Dictation";
+          exec = "${dictation}/bin/hotkeys.py";
           terminal = true;
           comment = "Dictate your speech to text at the press of a button";
           categories = [ "Utility" ];
