@@ -2,7 +2,7 @@
 # Expects home-manager to be setup
 { pkgs, ... }:
 let
-  nerdDictationPkg = import ./nerd-dictation-pkg;
+  nerdDictationPkg = import ./nerd-dictation-pkg { inherit pkgs; };
   speechToTextBtnShell = import ./build-bundle.nix { inherit (pkgs) stdenv; };
 in
 {

@@ -1,7 +1,9 @@
 # build: $ nix-build -o result --verbose
 # run: $ ./result/bin/nerd-dictation begin
+{
+  pkgs ? import <nixpkgs> {}
+}:
 let
-  pkgs = import <nixpkgs> {};
   inherit (pkgs) lib stdenv fetchurl fetchgit python3Packages;
 
   libvosk = stdenv.mkDerivation {
