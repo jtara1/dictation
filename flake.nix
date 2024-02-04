@@ -6,13 +6,12 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager }: {
-
-    homeManagerModules.default = args:
-    let
-      pkgs = nixpkgs;
-      entryAfter = home-manager.lib.hm.dag.entryAfter;
-    in
+  outputs = { self, nixpkgs, home-manager }:
+  let
+    entryAfter = home-manager.lib.hm.dag.entryAfter;
+  in
+  {
+    nixosModules.default = { pkgs, ... }:
     {
       imports = [
         (import ./dictation/desktop-app.nix { inherit pkgs entryAfter; })
