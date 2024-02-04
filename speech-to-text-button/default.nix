@@ -1,5 +1,6 @@
-# nix module spec with custom arg, vars including vars.user
-{ pkgs, vars ? { user = "j"; }, ... }:
+# Nix module spec
+# Expects home-manager to be setup
+{ pkgs, ... }:
 let
   speechToTextBtnShell = import ./build-bundle.nix { inherit (pkgs) stdenv; };
 in
