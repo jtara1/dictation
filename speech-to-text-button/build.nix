@@ -1,10 +1,21 @@
-{ stdenv }:
+# build: $ nix-build -o result --verbose build.nix
+# run: $ ./result/bin/hotkeys.py
+{
+  stdenv
+  , pkgs
+  , nerd-dictation
+}:
 stdenv.mkDerivation rec {
-  pname = "speech-to-text-button-bundle";
+  pname = "speech-to-text-button";
 
   version = "1.0";
 
   src = ./.;
+
+  propogatedBuildInputs = [
+    nerd-dictation
+    pkgs.screen
+  ];
 
   installPhase = ''
     mkdir -p $out/bin
@@ -14,16 +25,11 @@ stdenv.mkDerivation rec {
 
     cp toggle-typing.sh $out/bin/toggle-typing.sh
     chmod +x $out/bin/toggle-typing.sh
-
-    cp nerd-dictation $out/bin/nerd-dictation
-    chmod +x $out/bin/nerd-dictation
-
-    cp python.nix $out/bin/python.nix
   '';
 
   meta = with stdenv.lib; {
     description = "Press a button, computer types what you speak";
     maintainers = [ "jtara1" ];
-#    maintainers = with maintainers; [ jtara1 ];
+    license = pkgs.lib.licenses.asl20;
   };
 }

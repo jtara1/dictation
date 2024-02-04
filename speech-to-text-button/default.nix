@@ -5,14 +5,18 @@
   , entryAfter # from home-manager flake.nix, lib.hm.dag.entryAfter
 }:
 let
-  nerdDictationPkg = import ./nerd-dictation-pkg { inherit pkgs; };
-  nerdDictationModel = ./nerd-dictation-pkg/download-model.nix;
-  speechToTextBtnShell = import ./build-bundle.nix { inherit (pkgs) stdenv; };
+  nerd-dictation = import ./nerd-dictation-pkg { inherit pkgs; };
+  nerd-dictation-model = ./nerd-dictation-pkg/model.nix;
+
+  speechToTextButton = import ./build.nix { inherit (pkgs) stdenv nerd-dictation; };
 in
 {
-  environment.systemPackages = [ pkgs.screen nerdDictationPkg ];
-
   home-manager.sharedModules = [
+    # libvosk, vosk, nerd-dictation, and my executables in src/
+    {
+      home.packages = [ speechToTextButton ];
+    }
+
     # desktop app to run hotkeys.py
     {
       config.xdg.desktopEntries = {
@@ -20,7 +24,7 @@ in
           name = "Speech to Text Button";
           exec = "${speechToTextBtnShell}/bin/hotkeys.py";
           terminal = true;
-          comment = "Convert speech to text at the press of a button";
+          comment = "Dictate your speech to text at the press of a button";
           categories = [ "Utility" ];
           type = "Application";
           settings = {

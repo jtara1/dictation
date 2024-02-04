@@ -1,5 +1,5 @@
 # description: helps create a shell which has the required pkgs bundled to run nerd-dictation
-# run: $ nix-shell python.nix
+# run: $ nix-shell python-shell.nix
 with import <nixpkgs> { };
 let
   pythonPackages = python3Packages;

@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+#----------------------------------------------------------------------------------------------------
+# Globals: nerd-dictation, screen
+# Arguments:
+#  [subcommand] - if it's "end" then we end the dictation and the screen
+#----------------------------------------------------------------------------------------------------
 
 ### functions
 update_sess_name() {
@@ -13,9 +18,7 @@ update_sess_name() {
 end_listening() {
 	echo $'\n'--- ending
 	# TODO: improve by allowing this command and nerd-dictation begin command to block until they both exit instead of the `sleep 5`
-  screen -S "$sess_name" -X stuff "nix-shell \
-    $dir/python.nix \
-    --command $dir/nerd-dictation\ end^M"
+  screen -S "$sess_name" -X stuff "nerd-dictation\ end^M"
 
 	sleep 3
   screen -S "$sess_name" -X quit
@@ -23,8 +26,6 @@ end_listening() {
 }
 
 ### script
-dir="$(dirname "$(readlink -f "$0")")"
-#echo dir is "$dir"
 update_sess_name
 [ "$1" = "end" ] && end_listening && exit 0
 
@@ -36,10 +37,9 @@ case "$state" in
     screen -dmS "$sess_name"
     update_sess_name
 
-		# runs nix-shell in background running nerd-dictation in background
+    # run in background within the screen session
 		# to enable screen session to accept more input as commands
-    screen -S "$sess_name" -X stuff "nix-shell $dir/python.nix \
-      --run $dir/nerd-dictation\ begin\ --numbers-as-digits\ --numbers-no-suffix\ &^M"
+    screen -S "$sess_name" -X stuff "nerd-dictation\ begin\ --numbers-as-digits\ --numbers-no-suffix\ &^M"
 
     echo running > "$state_file"
     exit 0
@@ -47,9 +47,7 @@ case "$state" in
 
   "running")
     echo $'\n'--- pausing
-    screen -S "$sess_name" -X stuff "nix-shell \
-      $dir/python.nix \
-      --command $dir/nerd-dictation\ suspend^M"
+    screen -S "$sess_name" -X stuff "nerd-dictation\ suspend^M"
 
     echo suspended > "$state_file"
     exit 0
@@ -57,9 +55,7 @@ case "$state" in
 
   "suspended")
     echo $'\n'--- resuming
-    screen -S "$sess_name" -X stuff "nix-shell \
-      $dir/python.nix \
-      --command $dir/nerd-dictation\ resume^M"
+    screen -S "$sess_name" -X stuff "nerd-dictation\ resume^M"
 
     echo running > "$state_file"
     exit 0

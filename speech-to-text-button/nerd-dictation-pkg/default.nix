@@ -1,4 +1,4 @@
-# build: $ nix-build -o result --verbose
+# build: $ nix-build -o result --verbose default.nix
 # run: $ ./result/bin/nerd-dictation begin
 {
   pkgs ? import <nixpkgs> {}
@@ -16,14 +16,11 @@ let
     };
 
     nativeBuildInputs = with pkgs; [ unzip ];
-    unpackPhase = "
-      unzip $src
-    ";
+    unpackPhase = "unzip $src";
 
     installPhase = ''
       mkdir -p $out/lib
       mv vosk-linux-x86_64-0.3.45/* $out/lib
-      rm -r vosk-linux-x86_64-0.3.45/
     '';
   };
 
