@@ -1,9 +1,12 @@
 # nix module
 # expects home-manager to be setup
-{ pkgs, ... }:
+{
+  pkgs
+  , entryAfter # from home-manager flake.nix, lib.hm.dag.entryAfter
+}:
 let
   nerdDictationPkg = import ./nerd-dictation-pkg { inherit pkgs; };
-  nerdDictationDownloadModel = ./nerd-dictation-pkg/download-model.nix;
+  nerdDictationModel = ./nerd-dictation-pkg/download-model.nix;
   speechToTextBtnShell = import ./build-bundle.nix { inherit (pkgs) stdenv; };
 in
 {
@@ -29,9 +32,9 @@ in
 
     # vosk model: link from file in store derivation to home config location for nerd-dictation
     {
-      home.activationScripts.nerd-dictation-model = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      home.activation.nerd-dictation-model = entryAfter [ "writeBoundary" ] ''
         mkdir -p $HOME/.config/nerd-dictation 2> /dev/null
-        ln -sfn ${pkgs.callPackage nerdDictationDownloadModel { }}/model $HOME/.config/nerd-dictation/model
+        ln -sfn ${pkgs.callPackage nerdDictationModel { }}/model $HOME/.config/nerd-dictation/model
       '';
     }
   ];
