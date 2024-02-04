@@ -14,7 +14,7 @@ let
 
     src = fetchurl {
       url = "https://alphacephei.com/kaldi/models/vosk-model-en-us-0.42-gigaspeech.zip";
-      sha256 = "sha256-1nVcmbC8j7PFaWJpDcVel5Kr2SVQ3aC4iZ8X2lW/PzA=";
+      hash = "sha256-1nVcmbC8j7PFaWJpDcVel5Kr2SVQ3aC4iZ8X2lW/PzA=";
     };
 
     nativeBuildInputs = with pkgs; [ unzip ];
@@ -23,9 +23,6 @@ let
     installPhase = ''
       mkdir -p $out/model
       mv vosk-model-en-us-0.42-gigaspeech $out/model
-
-      rm vosk-model-en-us-0.42-gigaspeech
-      rm vosk-model-en-us-0.42-gigaspeech.zip
     '';
   };
 
