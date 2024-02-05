@@ -24,7 +24,7 @@ in
       config.xdg.desktopEntries = {
         dictation = {
           name = "Dictation";
-          exec = "${dictation}/bin/hotkeys.py";
+          exec = "${dictation}/lib/hotkeys.py";
           terminal = true;
           comment = "Dictate your speech to text at the press of a button";
           categories = [ "Utility" ];

@@ -5,6 +5,15 @@
 #  [subcommand] - if it's "end" then we end the dictation and the screen
 #----------------------------------------------------------------------------------------------------
 
+### pre-conditions
+if ! command -v nerd-dictation > /dev/null; then
+  echo command nerd-dictation is not defined
+  exit 1
+elif ! command -v screen > /dev/null; then
+  echo command screen is not defined
+  exit 1
+fi
+
 ### functions
 update_sess_name() {
   base_sess_name=speech-to-text
