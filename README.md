@@ -1,45 +1,66 @@
 # Dictation
 
-This enables you to the do speech to text typing and toggle to pause or resume it with the press of a hotkey.
-Everything runs locally. This code helps build, bundle, download and load model, add hotkeys, and run nerd-dictation.
+This enables you to dictate your speech to text and toggle to pause or resume it with the press of a hotkey.
+Everything runs locally. This code helps build, download and load model, add hotkeys, and run nerd-dictation.
 This was specifically tested on NixOS x86_64-linux X11.
 
 
 ## Requirements
 
-```shell
-chmod +x hotkeys.py
-chmod +x toggle-typing.sh
+I'm loading a bigger model than the default which takes several GB's on disk and ~5 GB memory.
+
+
+## Install
+
+### Flake
+
+in your system flake,
+
+```nix
+  inputs = {
+    # ...
+    dictation.url = "github:jtara1/dictation";
+    # if nixpkgs is defined here,
+    dictation.inputs.nixpkgs.follows = "nixpkgs"; # where nixpkgs is a var for nixos nixpkgs in inputs
+    # if home-manager is defined here,
+#    dictation.inputs.home-manager.follows = "home-manager"; # where home-manager is a var for home-manager in inputs
+  };
+  
+  # ...
+  # outputs = { self, nixpkgs, ... } @ inputs: { nixosConfigurations.my-pc-hostname.nixpkgs.lib.nixosSystem { modules = [ ]; }; };
+  # in modules list, add entry, inputs.dictation.nixosModules.default
 ```
 
-I'm loading a bigger model in python.nix than the default which takes several GB's on disk and ~5 GB memory.
+### Other
 
-### Packages
-
-- bash
-- screen
-- nix-shell
+I should be able to bundle this with `nix bundle` to just drop an executable on other computers.
 
 
 ## Usage
 
+### Linux Desktop App
+
+Search for and open `Dictation` desktop application.
+This opens a terminal running hotkeys.py which can help you monitor the logs, stdout, stderr.
+
+Most linux desktop environments should have support for this. I've created an entry for this executable as
+a .desktop config.
+
+### Direct Usage
+
+I haven't tested this much and don't support it, but it should work with some effort.
+
 Everything is layered so you can choose your entrypoint.
 
-### Direct usage with global hotkeys
+Change the 2 files to executable `chmod +x myfile`, check their hashbangs.
 
 ```shell
-cd dictation
 ./hotkeys.py
 ```
-
-requires: nix-shell and deps of toggle-typing.sh
-
-### Direct usage toggling dictation manually
 
 If you don't want the global hotkeys, you can
 
 ```shell
-cd dictation
 ./toggle-typing.sh # start
 ./toggle-typing.sh # pause
 ./toggle-typing.sh # resume
@@ -47,21 +68,9 @@ cd dictation
 ./toggle-typing.sh end # end
 ```
 
-requires: bash, nix-shell, GNU screen
+requires: bash, nerd-dictation, GNU screen
 
 If you kill its screen session directly, it won't deallocate memory for the model resulting in a memory leak.
-
-### speech-to-text-button.desktop
-
-Search for and open `Speech to Text Button` desktop application.
-This opens a terminal running hotkeys.py which can help you monitor the logs, stdout, stderr.
-
-requires: nix and home manager
-
-Most linux desktop environments should have support for this. I've created an entry for this executable as
-a desktop application.
-
-To use in Nix system, you'd import ./speech-to-text-button (loading default.nix nix module)
 
 
 ## Hotkeys
@@ -80,25 +89,26 @@ I'm open to suggestions for better default hotkeys.
 
 These are improvements I thought of. I'm not necessarily planning on doing these.
 
-`speech-to-text-button/`
+`dictation/`
+- [ ] bundle my nix-build derivation to serve an executable for non-Nix systems
+- [ ] test and fix usage on headless linux (TTY)
 - [x] download and bundle a better model in the build of the store derivation
 - [x] fix .desktop application - it's not linking to toggle-typing.sh correctly
 - [x] absolute path for nerd-dictation and ./venv created by `nix-shell python.nix` and bundle nerd-dictation with nix module default.nix
 - [x] python.nix (nix-shell) could build from my own derivation for nerd-dictation instead
 - [ ] test this on a fresh install running x86 64 linux with X11 running NixOS
 - [ ] add build attribute to let the user choose which model to download and use
-- [ ] test and fix usage on headless linux (TTY)
-- [ ] bundle my nix-build derivation to serve an executable for non-Nix systems
 - [ ] avoid multiple processes running hotkeys.py - toggle-typing.sh should be multi-process safe as it should refer to the same screen session
 - [ ] add build attributes to define custom hotkeys
 - [ ] define word mapping for common words and phrases that aren't normally spoken (like "nix")
 - [x] debug reason nerd-dictation dictating silence to "the" for me on silent idle -- (used an improved model for VOSK)
 - [ ] better default hotkeys
-- [ ] package as a nix flake
+- [x] package as a nix flake
+- [ ] self-hosted server to run nerd-dictation with pulseaudio socket protocol changed to tcp?
 
 `nerd-dictation/`
-- [ ] define nix runCommand or wrap nerd-dictation defining `--vosk-model-dir=some/nix/path/model` appending args added by the user for use with nerd-dictation or patch it in a more hacky way?
-- [ ] add home-manager as a dep in the build or add a systemd service to create ~/.config/nerd-dictation/model, download, unzip model before runtime for runtime?
+- [x] define nix runCommand or wrap nerd-dictation defining `--vosk-model-dir=some/nix/path/model` appending args added by the user for use with nerd-dictation or patch it in a more hacky way?
+- [x] add home-manager as a dep in the build or add a systemd service to create ~/.config/nerd-dictation/model, download, unzip model before runtime for runtime?
 
 
 ## Alternatives
@@ -117,11 +127,6 @@ You permit audio permission request via your browser for the web page/site, spea
 ### Android Gboard
 
 Press the mic button. Probably uses a remote relay server to process your audio.
-
-
-## `nerd-dictation/`
-
-This is an experimental nix derivation creation for: libvosk, vosk, nerd-dictation
 
 
 ## Sources
