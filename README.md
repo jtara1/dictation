@@ -7,7 +7,12 @@ This was specifically tested on NixOS x86_64-linux X11.
 
 ## Requirements
 
-I'm loading a bigger model than the default which takes several GB's on disk and ~5 GB memory.
+Each executable has its required packages, but these are installed through nix derivations I defined.
+
+By default, I'm loading a bigger model than their default which takes several GB's on disk and **~5 GB memory**.
+
+For other models, see https://alphacephei.com/vosk/models
+and reference my `model.nix`.
 
 
 ## Install

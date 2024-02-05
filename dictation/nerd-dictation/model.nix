@@ -10,6 +10,7 @@ let
     name = "nerd-dictation-model";
     pname = "nerd-dictation-model";
 
+    # for other models, see https://alphacephei.com/vosk/models
     src = fetchurl {
       url = "https://alphacephei.com/kaldi/models/vosk-model-en-us-0.42-gigaspeech.zip";
       hash = "sha256-1nVcmbC8j7PFaWJpDcVel5Kr2SVQ3aC4iZ8X2lW/PzA=";
