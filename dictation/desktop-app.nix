@@ -11,11 +11,13 @@ let
   dictation = import ./build.nix { inherit pkgs nerd-dictation; };
 in
 {
+  environment.systemPackages = [ dictation ];
+
   home-manager.sharedModules = [
     # libvosk, vosk, nerd-dictation, and my executables in src/
-    {
-      home.packages = [ dictation ];
-    }
+#    {
+#      home.packages = [ dictation ];
+#    }
 
     # desktop app to run hotkeys.py
     {

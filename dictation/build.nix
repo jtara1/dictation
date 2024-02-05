@@ -12,7 +12,7 @@ stdenv.mkDerivation {
 
   src = ./.;
 
-  propogatedBuildInputs = [
+  propagatedBuildInputs = [
     nerd-dictation
     pkgs.screen
   ];
@@ -27,9 +27,9 @@ stdenv.mkDerivation {
     chmod +x $out/bin/toggle-typing.sh
   '';
 
-  meta = with stdenv.lib; {
+  meta = {
     description = "Press a button, computer types what you speak";
     maintainers = [ "jtara1" ];
-    license = pkgs.lib.licenses.asl20;
+    license = lib.licenses.asl20;
   };
 }
