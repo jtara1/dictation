@@ -1,5 +1,5 @@
 # nix module
-# expects home-manager to be setup
+# expects home-manager to be setup or use this module from its flake
 {
   pkgs
   , entryAfter # from home-manager flake.nix, lib.hm.dag.entryAfter
@@ -8,16 +8,14 @@ let
   nerd-dictation = import ./nerd-dictation { inherit pkgs; };
   nerd-dictation-model = ./nerd-dictation/model.nix;
 
-  dictation = import ./build.nix { inherit pkgs nerd-dictation; };
+  dictation = import ./dictation-derivation.nix { inherit pkgs nerd-dictation; };
 in
 {
-  environment.systemPackages = [ dictation ];
-
   home-manager.sharedModules = [
     # libvosk, vosk, nerd-dictation, and my executables in src/
-#    {
-#      home.packages = [ dictation ];
-#    }
+    {
+      home.packages = [ dictation ];
+    }
 
     # desktop app to run hotkeys.py
     {

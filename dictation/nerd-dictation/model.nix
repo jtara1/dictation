@@ -1,4 +1,4 @@
-# build: $ nix-build -o result --verbose default.nix
+# build: $ nix-build -o result --verbose model.nix
 # check: $ file ./result/model
 {
   pkgs ? import <nixpkgs> {}

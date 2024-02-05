@@ -1,5 +1,5 @@
-# build: $ nix-build -o result --verbose build.nix
-# run: $ ./result/bin/hotkeys.py
+# build: $ nix-build -o result --verbose dictation-derivation.nix
+# run: $ ./result/lib/hotkeys.py
 {
   pkgs ? import <nixpkgs> {}
   , nerd-dictation ? import ./nerd-dictation {}
@@ -7,7 +7,7 @@
 with pkgs;
 let
   dictation = python3Packages.buildPythonPackage {
-    pname = "dictation_hotkeys";
+    pname = "dictation";
     version = "1.0";
 
     src = ./src;
