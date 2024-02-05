@@ -27,7 +27,7 @@ update_sess_name() {
 end_listening() {
 	echo $'\n'--- ending
 	# TODO: improve by allowing this command and nerd-dictation begin command to block until they both exit instead of the `sleep 5`
-  screen -S "$sess_name" -X stuff "nerd-dictation\ end^M"
+  screen -S "$sess_name" -X stuff "nerd-dictation end^M"
 
 	sleep 3
   screen -S "$sess_name" -X quit
@@ -48,7 +48,7 @@ case "$state" in
 
     # run in background within the screen session
 		# to enable screen session to accept more input as commands
-    screen -S "$sess_name" -X stuff "nerd-dictation\ begin\ --numbers-as-digits\ --numbers-no-suffix\ &^M"
+    screen -S "$sess_name" -X stuff "nerd-dictation begin --numbers-as-digits --numbers-no-suffix &^M"
 
     echo running > "$state_file"
     exit 0
@@ -56,7 +56,7 @@ case "$state" in
 
   "running")
     echo $'\n'--- pausing
-    screen -S "$sess_name" -X stuff "nerd-dictation\ suspend^M"
+    screen -S "$sess_name" -X stuff "nerd-dictation suspend^M"
 
     echo suspended > "$state_file"
     exit 0
@@ -64,7 +64,7 @@ case "$state" in
 
   "suspended")
     echo $'\n'--- resuming
-    screen -S "$sess_name" -X stuff "nerd-dictation\ resume^M"
+    screen -S "$sess_name" -X stuff "nerd-dictation resume^M"
 
     echo running > "$state_file"
     exit 0

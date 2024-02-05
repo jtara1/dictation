@@ -5,32 +5,31 @@
   , nerd-dictation ? import ./nerd-dictation {}
 }:
 with pkgs;
-stdenv.mkDerivation {
-  pname = "dictation";
-  version = "1.1";
+let
+  dictation = python3Packages.buildPythonPackage {
+    pname = "dictation_hotkeys";
+    version = "1.0";
 
-  src = ./.;
+    src = ./src;
 
-  installPhase = ''
-    mkdir -p $out/lib
+    propagatedBuildInputs = with python3Packages; [ pynput ];
 
-    cp hotkeys.py $out/lib/
-    chmod +x $out/lib/hotkeys.py
+    postInstall = ''
+      mkdir -p $out/lib
 
-    cp toggle-typing.sh $out/lib/
-    chmod +x $out/lib/toggle-typing.sh
-  '';
+      cp dictation_hotkeys/hotkeys.py $out/lib/
+      chmod +x $out/lib/hotkeys.py
 
-  postInstall = ''
-    wrapProgram $out/lib/hotkeys.py --prefix PATH : ${lib.makeBinPath [
-      (pkgs.python3.withPackages (p: with p; [ p.pynput ]))
-    ]}
-    wrapProgram $out/lib/toggle-typing.sh --prefix PATH : ${lib.makeBinPath [ nerd-dictation pkgs.screen ]}
-  '';
+      cp toggle-typing.sh $out/lib/
+      chmod +x $out/lib/toggle-typing.sh
 
-  meta = {
-    description = "Press a button, computer types what you speak";
-    maintainers = [ "jtara1" ];
-    license = lib.licenses.asl20;
+      wrapProgram $out/lib/toggle-typing.sh --prefix PATH : ${lib.makeBinPath [ nerd-dictation pkgs.screen ]}
+    '';
+
+    meta = {
+      description = "Press a button, computer types what you speak";
+      maintainers = [ "jtara1" ];
+      license = lib.licenses.asl20;
+    };
   };
-}
+in dictation

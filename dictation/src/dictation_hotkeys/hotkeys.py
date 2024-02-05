@@ -30,7 +30,7 @@ def parse_cli_args():
 	return args
 
 
-if __name__ == '__main__':
+def main():
 	try:
 		# hotkey1
 		toggle_dictation_hotkey = [
@@ -77,3 +77,7 @@ if __name__ == '__main__':
 			ender_listener.stop()
 		except:
 			pass
+
+
+if __name__ == '__main__':
+	main()
