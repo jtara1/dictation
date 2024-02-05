@@ -11,15 +11,13 @@
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
     entryAfter = home-manager.lib.hm.dag.entryAfter;
-  in
-  {
+  in {
     packages.${system} = {
       nerd-dictation = import ./dictation/nerd-dictation { inherit pkgs; };
       nerd-dictation-model = import ./dictation/nerd-dictation/model.nix { inherit pkgs; };
     };
 
-    nixosModules.default = { pkgs, ... }:
-    {
+    nixosModules.default = { pkgs, ... }: {
       imports = [
         (import ./dictation/desktop-app.nix { inherit pkgs entryAfter; })
       ];
