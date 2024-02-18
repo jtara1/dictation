@@ -30,7 +30,7 @@ in your system flake,
     # if home-manager is defined here,
     dictation.inputs.home-manager.follows = "home-manager"; # where home-manager is your var for home-manager in inputs
   };
-  
+
   # ...
   # in outputs
   # in modules list, add entry, inputs.dictation.nixosModules.default
@@ -38,7 +38,7 @@ in your system flake,
 
 ### Other
 
-Download an exec [release](https://github.com/jtara1/dictation/releases) for your system. 
+Download an exec [release](https://github.com/jtara1/dictation/releases) for your system.
 If it's not built for your system, make a PR or issue.
 
 
@@ -89,7 +89,7 @@ src=$(nix path-info 'github:jtara1/dictation#nerd-dictation-model')
 dst=~/.config/nerd-dictation/
 
 mkdir -p ~/.config/nerd-dictation/
-ln -sfn "$src"/model "$dst"/model 
+ln -sfn "$src"/model "$dst"/model
 ```
 
 Alternatively, you can download, unpack, move the model in place yourself.
@@ -99,7 +99,7 @@ Alternatively, you can download, unpack, move the model in place yourself.
 nix run 'github:jtara1/dictation#nerd-dictation'
 ```
 
-If you want `hotkeys.py` or `toggle-typing.sh` enabled for use with `nix run` or released as an exec, 
+If you want `hotkeys.py` or `toggle-typing.sh` enabled for use with `nix run` or released as an exec,
 make an issue or PR.
 
 
@@ -144,7 +144,7 @@ These options can only be used in certain contexts or applications.
 ### Web API
 
 This uses a remote relay server to process audio for speech to text. If you run chromium or chrome, you can use
-my prototype https://tarasoft.pro/speech-to-text.html
+my prototype https://elk.gg/speech-to-text
 
 It's about <100 lines of HTML and JS.
 
