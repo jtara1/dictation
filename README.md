@@ -4,12 +4,23 @@ This enables you to dictate your speech to text and toggle to pause or resume it
 Everything runs locally. This code helps build, download and load model, add hotkeys, and run nerd-dictation.
 This was specifically tested and built for x86_64-linux X11.
 
+Packages several things:
+- nerd-dictation
+- nerd-dictation-model (downloads and unpacks model to a nix store path)
+- linux desktop app
+  - hotkeys.py
+    - toggle-typing.sh
+
 
 ## Requirements
 
+None if using or building through nix.
+
 Each executable has its required packages, but these are installed through nix derivations I defined.
 
-By default, I'm loading a bigger model than their default which takes several GB's on disk and **~5 GB memory**.
+Some of the bigger models take several GB's on disk and **~5 GB memory**.
+
+By default, `nerd-dictation-model` (and linux desktop app), use a bigger model.
 
 For other models, see https://alphacephei.com/vosk/models
 and reference my `model.nix`.
@@ -47,7 +58,7 @@ If it's not built for your system, make a PR or issue.
 ### Linux Desktop App
 
 Search for and open `Dictation` desktop application.
-This opens a terminal running hotkeys.py which can help you monitor the logs, stdout, stderr.
+This opens a terminal running hotkeys.py which can help you monitor the logs.
 
 Most linux desktop environments should have support for this. I've created an entry for this executable as
 a .desktop config.
