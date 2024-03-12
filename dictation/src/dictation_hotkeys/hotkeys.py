@@ -36,7 +36,7 @@ def main():
 		toggle_dictation_hotkey = [
 			keyboard.Key.ctrl,
 			keyboard.Key.shift,
-			keyboard.KeyCode.from_char('}')
+			keyboard.KeyCode.from_char(']')
 		]
 
 		toggle_hotkey = keyboard.HotKey(
