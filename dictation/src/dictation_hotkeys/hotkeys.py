@@ -35,7 +35,8 @@ def main():
 		# hotkey1
 		toggle_dictation_hotkey = [
 			keyboard.Key.ctrl,
-			keyboard.KeyCode.from_char(']')
+			keyboard.Key.shift,
+			keyboard.KeyCode.from_char('}')
 		]
 
 		toggle_hotkey = keyboard.HotKey(
@@ -51,7 +52,8 @@ def main():
 		# hotkey2
 		end_dictation_hotkey = [
 			keyboard.Key.ctrl,
-			keyboard.KeyCode.from_char('[')
+			keyboard.Key.shift,
+			keyboard.KeyCode.from_char('{')
 		]
 
 		ender_hotkey = keyboard.HotKey(
