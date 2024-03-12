@@ -183,6 +183,7 @@ where url value is the file path to the local repo
 If doing an entire nixos-rebuild switch, you'll need to update the flake lock with
 
 ```shell
+cd /etc/nixos # where your flake.nix is located
 nix flake lock --update-input dictation
 ```
 between changes to the local dictation package.
