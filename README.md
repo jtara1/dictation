@@ -107,10 +107,10 @@ make an issue or PR.
 
 After hotkeys.py is executed,
 
-| Hotkey   | description                                                           |
-|----------|-----------------------------------------------------------------------|
-| ctrl + ] | load model and start dictation or pause dictation or resume dictation |
-| ctrl + [ | end dictation deallocating memory taken by the model and libs         |
+| Hotkey           | description                                                           |
+|------------------|-----------------------------------------------------------------------|
+| ctrl + shift + ] | load model and start dictation or pause dictation or resume dictation |
+| ctrl + shift + [ | end dictation deallocating memory taken by the model and libs         |
 
 I'm open to suggestions for better default hotkeys.
 
@@ -135,6 +135,7 @@ These are improvements I thought of. I'm not necessarily planning on doing these
 - [ ] better default hotkeys
 - [x] package as a nix flake
 - [ ] self-hosted server to run nerd-dictation with pulseaudio socket protocol changed to tcp?
+- [ ] other projects and APIs that offer speech to text?
 
 
 ## Alternatives
@@ -153,6 +154,27 @@ You permit audio permission request via your browser for the web page/site, spea
 ### Android Gboard
 
 Press the mic button. Probably uses a remote relay server to process your audio.
+
+
+## Development
+
+git clone this repo, make change, and run an executable
+
+### Flake
+
+change flake.nix inputs
+```nix
+#    dictation.url = "github:jtara1/dictation";
+    dictation.url = "path:/home/j/projects/dictation";
+```
+where url value is the file path to the local repo
+
+If doing an entire nixos-rebuild switch, you'll need to update the flake lock with
+
+```shell
+nix flake lock --update-input dictation
+```
+between changes to the local dictation package.
 
 
 ## Sources
