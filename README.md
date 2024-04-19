@@ -1,16 +1,26 @@
 # Dictation
 
 This enables you to dictate your speech to text and toggle to pause or resume it with the press of a hotkey.
-Everything runs locally. This code helps build, download and load model, add hotkeys, and run nerd-dictation.
+Everything runs locally. This code helps build, download and load the model, add hotkeys, and run nerd-dictation.
 This was specifically tested and built for x86_64-linux X11.
 
 Packages several things:
 - nerd-dictation
-- nerd-dictation-model (downloads and unpacks model to a nix store path)
-- linux desktop app
+- nerd-dictation-model
+- linux desktop app (`inputs.dictation.nixosModules.default`)
   - hotkeys.py
     - toggle-typing.sh
 
+```text
+$ nix flake show github:jtara1/dictation
+github:jtara1/dictation/8dafb6e2a7aecf33f6698f0f1e64587ebf1c6695
+├───nixosModules
+│   └───default: NixOS module
+└───packages
+    └───x86_64-linux
+        ├───nerd-dictation: package 'nerd-dictation'
+        └───nerd-dictation-model: package 'nerd-dictation-model'
+```
 
 ## Requirements
 
@@ -20,7 +30,7 @@ Each executable has its required packages, but these are installed through nix d
 
 Some of the bigger models take several GB's on disk and **~5 GB memory**.
 
-By default, `nerd-dictation-model` (and linux desktop app), use a bigger model.
+By default, `nerd-dictation-model` (and linux desktop app), uses a bigger model.
 
 For other models, see https://alphacephei.com/vosk/models
 and reference my `model.nix`.
@@ -50,7 +60,6 @@ in your system flake,
 ### Other
 
 Download an exec [release](https://github.com/jtara1/dictation/releases) for your system.
-If it's not built for your system, make a PR or issue.
 
 
 ## Usage
@@ -60,12 +69,8 @@ If it's not built for your system, make a PR or issue.
 Search for and open `Dictation` desktop application.
 This opens a terminal running hotkeys.py which can help you monitor the logs.
 
-Most linux desktop environments should have support for this. I've created an entry for this executable as
-a .desktop config.
 
 ### Direct Usage
-
-I haven't tested this much and don't support it, but it should work with some effort.
 
 Everything is layered so you can choose your entrypoint.
 
@@ -91,7 +96,7 @@ requires: bash, nerd-dictation, GNU screen
 
 If you kill its screen session directly, it won't deallocate memory for the model resulting in a memory leak.
 
-### Nix run
+### Nix Run
 
 #### Optionally build model derivation then link it
 ```shell
@@ -103,15 +108,13 @@ mkdir -p ~/.config/nerd-dictation/
 ln -sfn "$src"/model "$dst"/model
 ```
 
-Alternatively, you can download, unpack, move the model in place yourself.
+Alternatively, you can download, unpack, and move the model in place yourself.
 
 #### Run nerd-dictation
+
 ```shell
 nix run 'github:jtara1/dictation#nerd-dictation'
 ```
-
-If you want `hotkeys.py` or `toggle-typing.sh` enabled for use with `nix run` or released as an exec,
-make an issue or PR.
 
 
 ## Hotkeys
@@ -123,7 +126,7 @@ After hotkeys.py is executed,
 | ctrl + shift + ] | load model and start dictation or pause dictation or resume dictation |
 | ctrl + shift + [ | end dictation deallocating memory taken by the model and libs         |
 
-I'm open to suggestions for better default hotkeys.
+Default hotkeys are subject to change.
 
 
 ## TODO
@@ -149,47 +152,7 @@ These are improvements I thought of. I'm not necessarily planning on doing these
 - [ ] other projects and APIs that offer speech to text?
 
 
-## Alternatives
-
-These options can only be used in certain contexts or applications.
-
-### Web API
-
-This uses a remote relay server to process audio for speech to text. If you run chromium or chrome, you can use
-my prototype https://elk.gg/speech-to-text
-
-It's about <100 lines of HTML and JS.
-
-You permit audio permission request via your browser for the web page/site, speak, copy and paste your text.
-
-### Android Gboard
-
-Press the mic button. Probably uses a remote relay server to process your audio.
-
-
-## Development
-
-git clone this repo, make change, and run an executable
-
-### Flake
-
-change flake.nix inputs
-```nix
-#    dictation.url = "github:jtara1/dictation";
-    dictation.url = "path:/home/j/projects/dictation";
-```
-where url value is the file path to the local repo
-
-If doing an entire nixos-rebuild switch, you'll need to update the flake lock with
-
-```shell
-cd /etc/nixos # where your flake.nix is located
-nix flake lock --update-input dictation
-```
-between changes to the local dictation package.
-
-
-## Sources
+## References
 
 This software is directly built on top of other software including:
 - [nerd-dictation](https://github.com/ideasman42/nerd-dictation)
