@@ -1,5 +1,7 @@
 # Dictation
 
+[![FlakeHub](https://img.shields.io/endpoint?url=https://flakehub.com/f/jtara1/dictation/badge)](https://flakehub.com/flake/jtara1/dictation)
+
 This enables you to dictate your speech to text and toggle to pause or resume it with the press of a hotkey.
 Everything runs locally. This code helps build, download and load the model, add hotkeys, and run nerd-dictation.
 This was specifically tested and built for x86_64-linux X11.
